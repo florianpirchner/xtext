@@ -137,6 +137,16 @@ public abstract class AbstractXtextGeneratorMojo extends AbstractXtextMojo {
 	@Parameter(defaultValue = "false")
 	private Boolean incrementalXtextBuild = Boolean.FALSE;
 
+	/**
+	 * Will use the ResourceStorage to write the semantic model,
+	 * {@link IResourceDescription} and optional the node model also to a binary
+	 * file. For details see {@link StorageAwareResource} and {@link ResourceStorageFacade}.
+	 * 
+	 * @since 2.35
+	 */
+	@Parameter(defaultValue = "false")
+	private Boolean writeStorageResources = Boolean.FALSE;
+	
 	@Parameter( readonly = true, defaultValue = "${plugin.artifacts}" )
 	private List<Artifact> pluginDependencies;
 
@@ -184,6 +194,7 @@ public abstract class AbstractXtextGeneratorMojo extends AbstractXtextMojo {
 		builder.setTempDir(createTempDir().getAbsolutePath());
 		builder.setDebugLog(getLog().isDebugEnabled());
 		builder.setIncrementalBuild(incrementalXtextBuild);
+		builder.setWriteStorageResources(writeStorageResources);
 		if (clusteringConfig != null)
 			builder.setClusteringConfig(clusteringConfig.convertToStandaloneConfig());
 		configureCompiler(builder.getCompiler());
